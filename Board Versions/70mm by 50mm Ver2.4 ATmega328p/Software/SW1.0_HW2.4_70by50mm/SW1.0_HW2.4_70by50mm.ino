@@ -170,7 +170,7 @@ void setup() {
 
 void main_menu() {
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
   
   int x = 0;  //Display change counter
   int y = 200; //Display change max (modulused below)
@@ -181,9 +181,9 @@ void main_menu() {
     display.drawRoundRect( 0, 0, 83, 32, 2, SSD1306_WHITE);
 
     //Button Logic
-    if(!digitalRead(upsw) || !digitalRead(dnsw)) { //If either button pressed
+    if(digitalRead(upsw) || digitalRead(dnsw)) { //If either button pressed
       delay(100);
-      if(!digitalRead(upsw) && !digitalRead(dnsw)) { //If both buttons pressed
+      if(digitalRead(upsw) && digitalRead(dnsw)) { //If both buttons pressed
         if(!heat(maxTempArray[maxTempIndex])) {
           cancelledPB();
           main_menu();
@@ -194,11 +194,11 @@ void main_menu() {
           main_menu();
         }
       }
-      if(!digitalRead(upsw) && maxTempIndex < sizeof(maxTempArray) - 1) { //If upper button pressed
+      if(digitalRead(upsw) && maxTempIndex < sizeof(maxTempArray) - 1) { //If upper button pressed
         maxTempIndex++;
         EEPROM.update(tempIndexAddr, maxTempIndex);
       }
-      if(!digitalRead(dnsw) && maxTempIndex > 0) { //If lower button pressed
+      if(digitalRead(dnsw) && maxTempIndex > 0) { //If lower button pressed
         maxTempIndex--;
         EEPROM.update(tempIndexAddr, maxTempIndex);
       }
@@ -235,7 +235,7 @@ void main_menu() {
 
 bool heat(byte maxTemp) {
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
   
   //Heating Display
   display.clearDisplay();
@@ -268,7 +268,7 @@ bool heat(byte maxTemp) {
   
   while(1) {
     //Button Control
-    if(!digitalRead(upsw) || !digitalRead(dnsw)) {
+    if(digitalRead(upsw) || digitalRead(dnsw)) {
       analogWrite(mosfet, 0);
       return 0;
     }
@@ -330,7 +330,7 @@ bool heat(byte maxTemp) {
 
 void cancelledPB() { //Cancelled via push button
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
 
   //Update Display
   display.clearDisplay();
@@ -358,7 +358,7 @@ void cancelledPB() { //Cancelled via push button
 
 void cancelledTimer() { //Cancelled via 5 minute Time Limit
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
 
   //Initiate Swap Display
   int x = 0;  //Display change counter
@@ -409,7 +409,7 @@ void cancelledTimer() { //Cancelled via 5 minute Time Limit
 
 void coolDown() {
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
   
   float t = getTemp(); //Used to store current temperature
   
@@ -441,7 +441,7 @@ void coolDown() {
 
 void completed() {
   //Debounce
-  while(!digitalRead(upsw) || !digitalRead(dnsw)) {  }
+  while(digitalRead(upsw) || digitalRead(dnsw)) {  }
 
   //Update Display
   display.clearDisplay();
